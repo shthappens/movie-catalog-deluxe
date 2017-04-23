@@ -22,53 +22,37 @@ def db_connection
 end
 
 def actors_list
-  @actors = []
-  query = db_connection { |conn| conn.exec(
+  @actors = db_connection { |conn| conn.exec(
     "SELECT actors.id, actors.name
     FROM actors
     ORDER BY name ASC"
-    ) }
-  query.each do |actor|
-    @actors << actor
-    end
-  @actors
+    ) }.to_a
 end
 
 def actors_info
   @actor_id = params[:id]
-  @actor_info = []
-  query = db_connection { |conn| conn.exec(
+  @actor_info = db_connection { |conn| conn.exec(
    "SELECT movies.title, actors.name, movies.id, movies.year, cast_members.character AS role
    FROM cast_members
    JOIN movies ON cast_members.movie_id=movies.id
    JOIN actors ON cast_members.actor_id=actors.id
    WHERE actors.id='#{@actor_id}'"
-   ) }
-  query.each do |info|
-    @actor_info << info
-  end
-  @actor_info
+   ) }.to_a
  end
 
 def movies_list
-  @movies = []
-  query = db_connection { |conn| conn.exec(
+  @movies = db_connection { |conn| conn.exec(
     "SELECT movies.id, movies.title, movies.rating, movies.year, genres.name AS genre, studios.name AS studio
     FROM movies
     LEFT JOIN genres ON movies.genre_id=genres.id
     LEFT JOIN studios ON movies.studio_id=studios.id
     ORDER BY title ASC"
-    ) }
-  query.each do |movie|
-    @movies << movie
-  end
-  @movies
+    ) }.to_a
 end
 
 def movies_info
   @movie_id = params[:id]
-  @movie_info = []
-  query = db_connection { |conn| conn.exec(
+  @movie_info = db_connection { |conn| conn.exec(
     "SELECT movies.id, movies.title, movies.year, movies.rating,
     genres.name AS genre, studios.name AS studio, actors.name, actors.id,
     cast_members.character AS role
@@ -78,11 +62,7 @@ def movies_info
     JOIN genres ON movies.genre_id=genres.id
     JOIN studios ON movies.studio_id=studios.id
     WHERE movies.id='#{@movie_id}'"
-    ) }
-  query.each do |info|
-    @movie_info << info
-  end
-  @movie_info
+    ) }.to_a
 end
 
 get "/" do
