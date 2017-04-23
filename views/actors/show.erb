@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Movie Catalog Deluxe</title>
+  </head>
+
+  <body>
+    <h3>Actor Details<br />
+      Actor: <%=@actor_info[0]["name"] %>
+    </h3>
+
+      <% @actor_info.each do |actor| %>
+        <ul>
+          Movie: <a href="/movies/<%= actor["id"] %>"><%= actor["title"] %></a><br />
+          Year: <%=actor["year"] %><br />
+          Role: <%=actor["role"] %><br />
+          ID: <%=actor["id"] %>
+        </ul>
+      <% end %>
+
+  </body>
+</html>

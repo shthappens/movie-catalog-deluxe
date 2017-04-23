@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Movie Catalog Deluxe</title>
+  </head>
+  <body>
+    <h3>Movie Details<br />
+      Movie: <%=@movie_info[0]["title"] %>
+    </h3>
+
+        <ul>
+          Year: <%=@movie_info[0]["year"] %><br />
+          Rating: <%=@movie_info[0]["rating"] %><br />
+          Genre: <%=@movie_info[0]["genre"] %><br />
+          Studio: <%=@movie_info[0]["studio"] %><br />
+          <% @movie_info.each do |movie| %>
+            Actor: <a href="/actors/<%= movie["id"] %>"><%= movie["name"] %> as <%= movie["role"] %></a><br />
+          <% end %>
+        </ul>
+
+  </body>
+</html>
